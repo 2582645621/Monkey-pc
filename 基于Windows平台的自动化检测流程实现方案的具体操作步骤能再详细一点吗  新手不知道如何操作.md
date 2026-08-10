@@ -7,12 +7,14 @@ https://wenxin.baidu.com/search/10596983217245002259?enter_type=a_aiinput_duomo_
 微软官方Sysinternals套件：直接在微软官网搜索“Sysinternals Suite”下载，解压到D盘新建的Sysinternals文件夹
 安装Python：官网下载3.10版本安装包，勾选“Add Python to PATH”选项完成安装
 新建测试文件夹：在D盘根目录新建AutoTest文件夹，后续所有日志、Dump文件都存在这里
+
 二、第一步：硬件内存自检（排除物理故障）
 按下键盘Win+S，直接搜索“Windows内存诊断”，点击打开系统自带工具
 选择第一个选项“立即重新启动并检查问题”，电脑会自动重启进入诊断界面
 等待测试跑完，系统自动回到桌面后，右键点击左下角“开始菜单”→“计算机管理”
 依次展开“系统工具→事件查看器→Windows日志→系统”，右侧点击“查找”，输入MemoryDiagnostics-Results
 查看结果：显示“未检测到错误”就继续下一步，有报错说明内存条硬件有问题，先更换硬件再测试
+
 三、第二步：用性能监视器开启内存监控
 按下Win+R输入perfmon回车，直接打开系统自带的性能监视器
 左侧点击“性能监视器”，右键中间的蓝色图表区域，选择“属性”
@@ -21,6 +23,7 @@ https://wenxin.baidu.com/search/10596983217245002259?enter_type=a_aiinput_duomo_
 找到“Process”分类，展开后找到“Private Bytes”，选中你要测试的目标软件进程名，点击“添加>>”
 再找到“Memory”分类，选中“Pool Nonpaged Bytes”和“Pool Paged Bytes”，点击“添加>>”
 点击确定，就能看到实时的内存变化曲线，后续长时间运行观察曲线是否持续上涨不回落
+
 四、第三步：配置自动捕获崩溃和高内存Dump
 打开之前解压好的D:\Sysinternals文件夹，找到procdump.exe文件
 在文件夹地址栏输入cmd回车，直接在当前路径打开命令提示符窗口
@@ -32,6 +35,7 @@ procdump -e -t -ma 你的软件进程名 D:\AutoTest\
 cmd
 procdump -p 你的软件进程名 -c 800 -n 5 D:\AutoTest\
 最多生成5个快照文件，不会占满磁盘空间
+
 五、第四步：启动类Monkey随机压力测试
 1.按下Win+R输入cmd打开命令行，输入pip install pyautogui psutil回车，安装自动化依赖库
 2.打开D盘的AutoTest文件夹，新建一个文本文档，重命名为random_test.py
